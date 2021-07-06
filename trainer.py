@@ -612,7 +612,7 @@ class Trainer:
                         pose_inputs = torch.cat(pose_inputs, 1)
 
                     axisangle, translation = self.models["pose"](pose_inputs)
-                    print("translation", translation.mean())
+                    # print("translation", translation.mean())
                     outputs[("axisangle", 0, f_i)] = axisangle
                     outputs[("translation", 0, f_i)] = translation
 
@@ -687,7 +687,7 @@ class Trainer:
             # if self.opt.geometric_loss:
             if True:
                 outputs[("depth", 0, scale)] = depth
-            print("depth", outputs[("depth", 0, scale)].mean())
+            # print("depth", outputs[("depth", 0, scale)].mean())
                 
             for i, frame_id in enumerate(self.opt.frame_ids[1:]):
 
@@ -1612,7 +1612,7 @@ class Trainer:
                         "disp_{}/{}".format(s, j),
                         outputs[("disp", s)][j], self.step)
 
-            if vis_special == True:
+            if vis_special == True and (self.opt.dataset == 'nyuv2' or self.opt.dataset == 'nyuv2rec'):
                 def preprocess(input_image_dir):
                     input_image = pil_loader(input_image_dir)
                     resize = transforms.Resize((self.opt.height, self.opt.width),
